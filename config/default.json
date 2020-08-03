@@ -1,6 +1,6 @@
 {
   "host": "localhost",
-  "port": 3030,
+  "port": 3032,
   "public": "../public/",
   "paginate": {
     "default": 10,
@@ -10,10 +10,7 @@
     "entity": "user",
     "service": "users",
     "secret": "f1vABHH6lWoqseq3W9AGrY6fFQM=",
-    "authStrategies": [
-      "jwt",
-      "local"
-    ],
+    "authStrategies": ["jwt", "local"],
     "jwtOptions": {
       "header": {
         "typ": "access"
