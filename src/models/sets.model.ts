@@ -1,21 +1,19 @@
-// warframes-model.js - A mongoose model
+// sets-model.js - A mongoose model
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
+import { Model, Mongoose } from 'mongoose';
 import { Application } from '../declarations';
 
-export default function (app: Application) {
-  const modelName = 'warframes';
-  const mongooseClient = app.get('mongooseClient');
+export default function (app: Application): Model<any> {
+  const modelName = 'sets';
+  const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema(
     {
       name: { type: String, required: true },
-      description: { type: String },
-      image: { type: String },
-      havePrime: { type: Boolean },
-      isOnVault: { type: Boolean },
-      set: { type: Schema.Types.ObjectId, ref: 'sets' },
+      description: { type: String, required: true },
+      type: Number,
     },
     {
       timestamps: true,
@@ -25,7 +23,7 @@ export default function (app: Application) {
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel
   if (mongooseClient.modelNames().includes(modelName)) {
-    mongooseClient.deleteModel(modelName);
+    (mongooseClient as any).deleteModel(modelName);
   }
-  return mongooseClient.model(modelName, schema);
+  return mongooseClient.model<any>(modelName, schema);
 }
