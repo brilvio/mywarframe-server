@@ -1,4 +1,4 @@
-// parts-model.js - A mongoose model
+// inventory-model.js - A mongoose model
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
@@ -6,20 +6,13 @@ import { Model, Mongoose } from 'mongoose';
 import { Application } from '../declarations';
 
 export default function (app: Application): Model<any> {
-  const modelName = 'parts';
+  const modelName = 'inventory';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema(
     {
-      name: { type: String, required: true },
-      description: { type: String, required: true },
-      image: { type: String },
-      isPrime: { type: Boolean },
-      isOnVault: { type: Boolean },
-      dropsFrom: [{ type: String, required: true }],
-      relic: [{ type: Schema.Types.ObjectId, ref: 'relics' }],
-      needs: { sets: { type: Schema.Types.ObjectId, ref: 'sets' }, quantity: Number },
-      set: { type: Schema.Types.ObjectId, ref: 'sets' },
+      user: { type: Schema.Types.ObjectId, ref: 'users', required: true },
+      parts: [{ part: { type: Schema.Types.ObjectId, ref: 'parts' }, quantity: Number }],
     },
     {
       timestamps: true,
